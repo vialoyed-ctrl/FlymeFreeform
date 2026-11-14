@@ -151,7 +151,7 @@ internal class ColorOsAllAppsContent(loader: ClassLoader, target: ColorOsSidebar
         // 这几个点只做廉价比对，命中直接返回，未命中才重排。
         listOf(300L, 700L, 1200L, 2000L, 3000L).forEach { d ->
             h.postDelayed({
-                // 搜索框有内容时一律不重排：把收藏/最近灌回 mData 会覆盖搜索结果，
+                // 搜索框有内容时一律不重排：把收藏/最近灌回 mData 会把搜索结果顶掉，
                 // 界面不刷新但数据已经换了，点第一行就落到收藏组里（搜「文件」点出「翻译」）。
                 if (currentQuery().isEmpty()) {
                     FavoriteGroupInjector.prepareAsync(context, adapter.javaClass.classLoader)

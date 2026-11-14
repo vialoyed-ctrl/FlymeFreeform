@@ -4,6 +4,7 @@ import android.util.Log
 import io.github.libxposed.api.XposedInterface
 import io.github.libxposed.api.XposedModule
 import io.github.libxposed.api.XposedModuleInterface
+import io.github.hoerire.flymefreeform.hook.PortalTapHookInstaller
 import io.github.hoerire.flymefreeform.hook.ProcessConfiguration
 import io.github.hoerire.flymefreeform.hook.SidebarHookInstaller
 import io.github.hoerire.flymefreeform.platform.coloros.ColorOsSidebarTarget
@@ -113,6 +114,12 @@ class ModuleMain : XposedModule() {
                 SidebarHookInstaller(this, settings).install(param.classLoader, param.applicationInfo)
             }
 
+            processName == PortalTapHookInstaller.PACKAGE_NAME &&
+                param.packageName == PortalTapHookInstaller.PACKAGE_NAME -> {
+                hooksInstalled = true
+                PortalTapHookInstaller(this, settings).install(param.classLoader)
+            }
+
             processName == PROCESS_SYSTEM_UI && param.packageName == PROCESS_SYSTEM_UI -> {
                 hooksInstalled = true
                 SystemUiHookInstaller(this, settings).install(param.classLoader)
@@ -129,6 +136,7 @@ class ModuleMain : XposedModule() {
     private fun isExpectedProcess(param: XposedModuleInterface.ModuleLoadedParam): Boolean =
         param.isSystemServer ||
             param.processName == PROCESS_SYSTEM_UI ||
+            param.processName == PortalTapHookInstaller.PACKAGE_NAME ||
             param.processName == ColorOsSidebarTarget.PROCESS_NAME
 
     private fun disableForConfigurationFailure(code: String, exception: RuntimeException) {

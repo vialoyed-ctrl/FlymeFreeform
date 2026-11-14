@@ -229,7 +229,7 @@ internal class ColorOsAllAppsWindow(
                 try {
                     manager.removeViewImmediate(root)
                 } catch (_: IllegalArgumentException) {
-                    // 窗口已由系统移除。
+                    // 系统已移除窗口。
                 }
             }
             root.removeAllViews()

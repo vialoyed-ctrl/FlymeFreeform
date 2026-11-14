@@ -1111,7 +1111,7 @@ internal class ColorOsFreeformCoordinator(
     /**
      * 底部手势区的高度（像素）。
      *
-     * 保持挂起的浮层要把这一条让给系统，否则从底部上滑会被窗口拦截。
+     * 保持挂起的浮层要把这一条让给系统，否则从底部上滑会被窗口吃掉。
      * 优先读系统 navigation_bar_height（手势导航下就是那条手势区），读不到才用兜底值；
      * 再补一点余量，盖住系统实际判定的吸附边界。
      */
@@ -1240,7 +1240,7 @@ internal class ColorOsFreeformCoordinator(
      * 以避免全屏可触摸窗口拦截底部手势——
      * 这也是 v744 的做法：它的角区窗口带 FLAG_NOT_TOUCHABLE，事件全走 monitor。
      *
-     * 不使用 FLAG_DIM_BEHIND：它会让系统对下层窗口做调暗合成，每次呼出都会让
+     * 不再使用 FLAG_DIM_BEHIND：它会让系统对下层窗口做调暗合成，每次呼出都会让
      * 屏幕内容左右抖一下。遮罩改回由 Compose 画（窗口本身 NOT_TOUCHABLE，不影响触摸）。
      * windowAnimations 也显式置 0，避免系统给新窗口套上默认的进入动画。
      */

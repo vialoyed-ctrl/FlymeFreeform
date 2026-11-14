@@ -82,7 +82,7 @@ internal data class ModuleSettingsSnapshot(
      *
      * 下面每个 xxxEffective 都是「总闸 && 该项开关」，hook 一律只读这些派生值：
      * 总闸关闭时整组能力都不介入系统，而不是只把界面变灰。
-     * 「轻量打开」不作为独立总开关；保留该命名以避免 hook 侧全量改名。
+     * 「轻量打开」曾是独立总开关，已退役；名字保留下来只是免得 hook 侧全量改名。
      */
     val zoomInteractionActive: Boolean
         get() = enabled
@@ -257,11 +257,11 @@ internal data class ModuleSettingsSnapshot(
             }
             val bothCornersDisabled = !leftEnabled && !rightEnabled
             // 老配置迁移（升级路径）：
-            // 1. 总开关「轻量打开」为停用状态但仍有值且为关 —— 说明升级前用户把小窗能力整体关着，
+            // 1. 已退役的总开关「轻量打开」还留值且为关 —— 说明升级前用户把小窗能力整体关着，
             //    那么所有场景都按关处理；第一次保存设置时这个键会被清掉，之后不再干预。
             // 2. 新拆出来的场景键（登录授权 / 系统代发 / 复制链接）没存过时继承旧「应用跳转」
             //    的值，避免升级后用户原本能小窗的场景突然变全屏。
-            // 3. 「应用分享」为新增能力，不继承旧值：其旧行为表现为全屏，直接打开会造成形态突变。
+            // 3. 「应用分享」是本次新增的能力，不继承：它此前实际表现为全屏，直接打开反而突兀。
             val legacyMaster =
                 runCatching {
                     if (!preferences.contains(ModulePreferences.LEGACY_KEY_ZOOM_INTERACTION_ENABLED)) {

@@ -93,7 +93,7 @@ internal object ModulePreferences {
     const val LEGACY_KEY_ZOOM_LAUNCH_CONTROL_CENTER = "zoom_launch_control_center"
     const val LEGACY_KEY_ZOOM_LAUNCH_INTER_APP = "zoom_launch_inter_app"
 
-    /** 旧版桌面入口开关（快捷项 / 卡片）的键，仅用于升级后清除残留值。 */
+    /** 已移除的桌面入口开关（快捷项 / 卡片），仅用于升级后清掉残留值。 */
     const val LEGACY_KEY_ZOOM_LAUNCHER_SHORTCUT = "zoom_launcher_shortcut_v1"
     const val LEGACY_KEY_ZOOM_LAUNCHER_CARD = "zoom_launcher_card_v1"
     const val KEY_RADIAL_KEEP_OPEN = "radial_keep_open"

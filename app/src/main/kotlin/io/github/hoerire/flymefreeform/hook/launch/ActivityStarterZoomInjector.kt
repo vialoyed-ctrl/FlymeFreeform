@@ -288,7 +288,7 @@ internal class ActivityStarterZoomInjector(
     /**
      * 桌面图标点击：桌面以 startActivityForResult + MAIN 打开应用。
      *
-     * 这一类不参与启动改写；逐条记录「跳过原因」只会掩盖真正的异常，
+     * 这一类不参与启动改写，逐条打「跳过原因」只会把真正的异常埋掉，
      * 因此三条兜底日志对它一律静默；其余启动照常记录。
      */
     private fun isLauncherIconLaunch(callingPackage: String?, action: String?, hasResultTo: Boolean): Boolean =

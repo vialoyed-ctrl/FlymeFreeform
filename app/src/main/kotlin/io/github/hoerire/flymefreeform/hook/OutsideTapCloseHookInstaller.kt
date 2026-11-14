@@ -224,7 +224,7 @@ internal class OutsideTapCloseHookInstaller(
      * 把「因新窗口替换而转成浮标」改成「直接关闭」。
      *
      * 系统的策略对象 ExitFlexibleTaskToFloatStrategy 会带一个来源标记，
-     * 其中 SOURCE_FROM_HANDLE_REPLACE_TO_FLOAT 表示"被新窗口挤出、收成浮标"。
+     * 其中 SOURCE_FROM_HANDLE_REPLACE_TO_FLOAT 表示"被新窗口顶掉、收成浮标"。
      * 在 controller.exitFlexibleTaskWindowInnerLocked 入口把它替换成 ToBack（关闭）策略，
      * 结果是窗口被关掉而不是留下浮标；用户主动拖到边缘（其他来源）仍然保持原生行为。
      */
@@ -284,7 +284,7 @@ internal class OutsideTapCloseHookInstaller(
                 if (isFloatExit && configuration.snapshot.autoCloseWindowEffective) {
                     // 应用内转为小窗时，ColorOS 17 同样会执行一次退场裁决，且退出对象为
                     // 刚创建的窗口本身。该情形予以放行：关闭该窗口等同于窗口一建立即消失，
-                    // 与「自动收窗」所处理的「旧窗口被挤出」并非同一语义。
+                    // 与「自动收窗」所处理的「旧窗口被顶掉」并非同一语义。
                     var exitingTask = strategy?.let { exiting ->
                         fieldInHierarchy(exiting.javaClass, "mTask")?.get(exiting)
                     }
@@ -307,7 +307,7 @@ internal class OutsideTapCloseHookInstaller(
                     // 判据只看这次退出是不是系统自己的"该谁退出"裁决
                     //（determine*/updateTaskMaxNum*）；用户拖到边缘走的拖拽入口不经过这里。
                     //
-                    // 不以「最近 1.5 秒内有启动」为门槛：该规则本意是区分"被新应用挤出"
+                    // 不再用「最近 1.5 秒内有启动」当门槛：那条规则本意是区分"被新应用顶掉"
                     // 与"自身变形"，但它要求打开小窗后 1.5 秒内系统就做裁决，实际几乎必然错过，
                     // 结果是窗口照样被收成贴边浮标（用户日志里的 KeepOriginal_launch0）。
                     // 至于"退出的到底是不是刚创建的那个窗口"，不再需要单独判断：
